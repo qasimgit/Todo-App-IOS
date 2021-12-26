@@ -1,9 +1,9 @@
 import React from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 
-const Task = ({name}) => {
+const Task = ({name, handleClick, index}) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => handleClick(index)}>
       <View style={styles.item}>
         <View style={styles.firstCont}>
           <View style={styles.box} />

@@ -16,6 +16,16 @@ import Task from './components/Task';
 const App = () => {
   const [task, setTask] = useState('');
   const [taskItems, setTaskItems] = useState(['qasim', 'sample', 'sasamsmms']);
+
+  const addTask = () => {
+    setTaskItems([...taskItems, task]);
+  };
+
+  const completeTask = index => {
+    const tasks = taskItems;
+    tasks.splice(index, 1);
+    setTaskItems(tasks);
+  };
   return (
     <View style={styles.container}>
       {/* section */}
@@ -26,26 +36,25 @@ const App = () => {
           <Text style={styles.heading}>Today's Tasks</Text>
           <View style={styles.tasksContainer}>
             {taskItems?.map((val, index) => (
-              <Task name={val} key={index} />
+              <Task name={val} handleClick={completeTask} key={index} index />
             ))}
           </View>
         </View>
       </ScrollView>
       {/* Write Task section  */}
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <View style={styles.bottomContainer}>
-          <TextInput
-            style={styles.textField}
-            value={task}
-            onChangeText={e => setTask(e)}
-          />
-          <TouchableOpacity>
-            <View style={styles.plusCont}>
-              <Text style={styles.plusIcon}>+</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.bottomContainer}>
+        <TextInput
+          style={styles.textField}
+          value={task}
+          onChangeText={e => setTask(e)}
+        />
+        <TouchableOpacity>
+          <View style={styles.plusCont}>
+            <Text style={styles.plusIcon}>+</Text>
+          </View>
+        </TouchableOpacity>
       </KeyboardAvoidingView>
     </View>
   );
@@ -75,7 +84,7 @@ const styles = StyleSheet.create({
 
   bottomContainer: {
     position: 'absolute',
-    bottom: 40,
+    bottom: 50,
     width: '100%',
     display: 'flex',
     flexDirection: 'row',
@@ -84,8 +93,10 @@ const styles = StyleSheet.create({
   },
 
   textField: {
-    borderWidth: 0.2,
-    width: '70%',
+    width: '79%',
+    padding: 15,
+    borderRadius: 50,
+    backgroundColor: '#fff',
   },
 
   plusCont: {
@@ -96,7 +107,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     backgroundColor: '#fff',
-    marginLeft: 10,
+    marginLeft: 5,
   },
 
   plusIcon: {
