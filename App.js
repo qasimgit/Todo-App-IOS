@@ -10,19 +10,24 @@ import {
   TouchableOpacity,
   Platform,
   ScrollView,
+  Keyboard,
 } from 'react-native';
 import Task from './components/Task';
 
 const App = () => {
   const [task, setTask] = useState('');
-  const [taskItems, setTaskItems] = useState(['qasim', 'sample', 'sasamsmms']);
+  const [taskItems, setTaskItems] = useState([]);
 
   const addTask = () => {
-    setTaskItems([...taskItems, task]);
+    const randomNumber = Math.floor(1000 + Math.random() * 9000);
+    setTaskItems([...taskItems, {name: task, id: randomNumber}]);
+    setTask('');
+    Keyboard.dismiss();
   };
 
-  const completeTask = index => {
-    const tasks = taskItems;
+  const completeTask = id => {
+    const tasks = [...taskItems];
+    const index = tasks.findIndex(val => val?.id === id);
     tasks.splice(index, 1);
     setTaskItems(tasks);
   };
@@ -36,7 +41,12 @@ const App = () => {
           <Text style={styles.heading}>Today's Tasks</Text>
           <View style={styles.tasksContainer}>
             {taskItems?.map((val, index) => (
-              <Task name={val} handleClick={completeTask} key={index} index />
+              <Task
+                name={val?.name}
+                handleClick={completeTask}
+                key={index}
+                id={val?.id}
+              />
             ))}
           </View>
         </View>
@@ -50,7 +60,7 @@ const App = () => {
           value={task}
           onChangeText={e => setTask(e)}
         />
-        <TouchableOpacity>
+        <TouchableOpacity onPress={addTask}>
           <View style={styles.plusCont}>
             <Text style={styles.plusIcon}>+</Text>
           </View>
