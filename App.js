@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
 import {
-  SafeAreaView,
   Text,
   View,
   StyleSheet,
-  StatusBar,
   KeyboardAvoidingView,
   TextInput,
   TouchableOpacity,
