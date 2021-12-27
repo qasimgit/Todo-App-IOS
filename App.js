@@ -56,6 +56,7 @@ const App = () => {
         <TextInput
           style={styles.textField}
           value={task}
+          placeholder="Write task here"
           onChangeText={e => setTask(e)}
         />
         <TouchableOpacity onPress={addTask}>
